@@ -51,4 +51,4 @@ describe('how let works', function() {
   });
 });
 
-//# sourceMappingURL=mySpec.js.map
+//# sourceMappingURL=let.js.map
