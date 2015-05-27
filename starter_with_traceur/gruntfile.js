@@ -17,10 +17,10 @@ module.exports = function (grunt) {
             },
             custom: {
                 files: [{
-                    expand: true, 
+                    expand: true,
                     src: ["app/es6/*.js"],
                     dest: "app/es5/",
-                    ext: ".js", 
+                    ext: ".js",
                     flatten: true
                 }]
             }
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
             },
             js: {
                 files: "app/es6/*.js",
-                tasks: ["traceur"]                
+                tasks: ["traceur"]
             }
         },
         open: {
@@ -47,6 +47,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-express");
     grunt.loadNpmTasks("grunt-open");
-    grunt.loadNpmTasks("grunt-traceur");
+    grunt.loadNpmTasks("grunt-traceur-simple");
     grunt.registerTask("default", ["traceur", "express", "open", "watch"]);
 };
