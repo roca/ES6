@@ -77,4 +77,21 @@ describe('generators', function() {
 
 	});
 
+	it('can take a parametre from next(param)', function() {
+		let range = function * (start,end) {
+			let current = start;
+			while(current <= end) {
+				yield current;
+				current += 1;
+			}
+		};
+
+		let result = [];
+		let iterator = range(1,10);
+		let next = iterator.next();
+
+
+		expect(result).toEqual([1,3,5,7,9]);
+	});
+
 });

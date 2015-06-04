@@ -423,6 +423,40 @@ System.registerModule("../es6/generator.js", [], function() {
       }
       expect(count).toBe(1);
     });
+    it('can take a parametre from next(param)', function() {
+      var range = $traceurRuntime.initGeneratorFunction(function $__10(start, end) {
+        var current;
+        return $traceurRuntime.createGeneratorInstance(function($ctx) {
+          while (true)
+            switch ($ctx.state) {
+              case 0:
+                current = start;
+                $ctx.state = 9;
+                break;
+              case 9:
+                $ctx.state = (current <= end) ? 1 : -2;
+                break;
+              case 1:
+                $ctx.state = 2;
+                return current;
+              case 2:
+                $ctx.maybeThrow();
+                $ctx.state = 4;
+                break;
+              case 4:
+                current += 1;
+                $ctx.state = 9;
+                break;
+              default:
+                return $ctx.end();
+            }
+        }, $__10, this);
+      });
+      var result = [];
+      var iterator = range(1, 10);
+      var next = iterator.next();
+      expect(result).toEqual([1, 3, 5, 7, 9]);
+    });
   });
   return {};
 });
