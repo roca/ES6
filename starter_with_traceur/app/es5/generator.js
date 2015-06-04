@@ -425,7 +425,8 @@ System.registerModule("../es6/generator.js", [], function() {
     });
     it('can take a parametre from next(param)', function() {
       var range = $traceurRuntime.initGeneratorFunction(function $__10(start, end) {
-        var current;
+        var current,
+            delta;
         return $traceurRuntime.createGeneratorInstance(function($ctx) {
           while (true)
             switch ($ctx.state) {
@@ -440,11 +441,11 @@ System.registerModule("../es6/generator.js", [], function() {
                 $ctx.state = 2;
                 return current;
               case 2:
-                $ctx.maybeThrow();
+                delta = $ctx.sent;
                 $ctx.state = 4;
                 break;
               case 4:
-                current += 1;
+                current += delta || 1;
                 $ctx.state = 9;
                 break;
               default:
@@ -452,9 +453,34 @@ System.registerModule("../es6/generator.js", [], function() {
             }
         }, $__10, this);
       });
+      var range2 = function(start, end) {
+        var current = start;
+        var first = true;
+        return {next: function() {
+            var delta = arguments[0] !== (void 0) ? arguments[0] : 1;
+            if (!first) {
+              current += delta;
+            }
+            ;
+            var result = {
+              value: undefined,
+              done: true
+            };
+            if (current <= end) {
+              result.value = current;
+              result.done = false;
+            }
+            first = false;
+            return result;
+          }};
+      };
       var result = [];
-      var iterator = range(1, 10);
+      var iterator = range2(1, 10);
       var next = iterator.next();
+      while (!next.done) {
+        result.push(next.value);
+        next = iterator.next(2);
+      }
       expect(result).toEqual([1, 3, 5, 7, 9]);
     });
   });
