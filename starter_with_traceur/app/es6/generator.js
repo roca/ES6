@@ -77,7 +77,7 @@ describe('generators', function() {
 
 	});
 
-	it('can take a parametre from next(param)', function() {
+	it('can take a parameter from next(param)', function() {
 		let range = function * (start,end) {
 			let current = start;
 			while(current <= end) {

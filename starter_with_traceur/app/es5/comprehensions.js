@@ -1,76 +1,8 @@
-System.registerModule("../es6/generator.js", [], function() {
+System.registerModule("../es6/comprehensions.js", [], function() {
   "use strict";
-  var __moduleName = "../es6/generator.js";
-  describe('generators', function() {
-    it('can build an iterable', function() {
-      var numbers = $traceurRuntime.initGeneratorFunction(function $__10(start, end) {
-        var i;
-        return $traceurRuntime.createGeneratorInstance(function($ctx) {
-          while (true)
-            switch ($ctx.state) {
-              case 0:
-                i = start;
-                $ctx.state = 9;
-                break;
-              case 9:
-                $ctx.state = (i <= end) ? 5 : 7;
-                break;
-              case 4:
-                i++;
-                $ctx.state = 9;
-                break;
-              case 5:
-                console.log("yield: " + i);
-                $ctx.state = 6;
-                break;
-              case 6:
-                $ctx.state = 2;
-                return i;
-              case 2:
-                $ctx.maybeThrow();
-                $ctx.state = 4;
-                break;
-              case 7:
-                ;
-                $ctx.state = -2;
-                break;
-              default:
-                return $ctx.end();
-            }
-        }, $__10, this);
-      });
-      var sum = 0;
-      console.log("next");
-      var $__5 = true;
-      var $__6 = false;
-      var $__7 = undefined;
-      try {
-        for (var $__3 = void 0,
-            $__2 = (numbers(1, 5))[$traceurRuntime.toProperty(Symbol.iterator)](); !($__5 = ($__3 = $__2.next()).done); $__5 = true) {
-          var n = $__3.value;
-          {
-            sum += n;
-            console.log("next");
-          }
-        }
-      } catch ($__8) {
-        $__6 = true;
-        $__7 = $__8;
-      } finally {
-        try {
-          if (!$__5 && $__2.return != null) {
-            $__2.return();
-          }
-        } finally {
-          if ($__6) {
-            throw $__7;
-          }
-        }
-      }
-      ;
-      expect(sum).toBe(15);
-    });
-    it('can be used to make a class iterable', function() {
+  var __moduleName = "../es6/comprehensions.js";
+  describe('comprehensions', function() {
+    it('can be used with yield', function() {
       var Company = (function() {
         var $__1;
         function Company() {
@@ -124,7 +56,7 @@ System.registerModule("../es6/generator.js", [], function() {
                     $ctx.state = 8;
                     break;
                   case 8:
-                    console.log(e);
+                    console.log("yield", e);
                     $ctx.state = 6;
                     break;
                   case 6:
@@ -391,6 +323,7 @@ System.registerModule("../es6/generator.js", [], function() {
       });
       var count = 0;
       var company = new Company();
+      var found = undefined;
       company.addEmployees("Tim", "Sue", "Joy", "Tom", "Terance");
       var iterator = company[Symbol.iterator]();
       iterator.next();
@@ -400,11 +333,13 @@ System.registerModule("../es6/generator.js", [], function() {
       try {
         for (var $__3 = void 0,
             $__2 = (take(filter(company, (function(e) {
-              return e[0] == 'T';
+              return e[0] == 'S';
             })), 1))[$traceurRuntime.toProperty(Symbol.iterator)](); !($__5 = ($__3 = $__2.next()).done); $__5 = true) {
           var employee = $__3.value;
           {
             count += 1;
+            found = employee;
+            console.log("got", employee);
           }
         }
       } catch ($__8) {
@@ -422,68 +357,9 @@ System.registerModule("../es6/generator.js", [], function() {
         }
       }
       expect(count).toBe(1);
-    });
-    it('can take a parameter from next(param)', function() {
-      var range = $traceurRuntime.initGeneratorFunction(function $__10(start, end) {
-        var current,
-            delta;
-        return $traceurRuntime.createGeneratorInstance(function($ctx) {
-          while (true)
-            switch ($ctx.state) {
-              case 0:
-                current = start;
-                $ctx.state = 9;
-                break;
-              case 9:
-                $ctx.state = (current <= end) ? 1 : -2;
-                break;
-              case 1:
-                $ctx.state = 2;
-                return current;
-              case 2:
-                delta = $ctx.sent;
-                $ctx.state = 4;
-                break;
-              case 4:
-                current += delta || 1;
-                $ctx.state = 9;
-                break;
-              default:
-                return $ctx.end();
-            }
-        }, $__10, this);
-      });
-      var range2 = function(start, end) {
-        var current = start;
-        var first = true;
-        return {next: function() {
-            var delta = arguments[0] !== (void 0) ? arguments[0] : 1;
-            if (!first) {
-              current += delta;
-            }
-            ;
-            var result = {
-              value: undefined,
-              done: true
-            };
-            if (current <= end) {
-              result.value = current;
-              result.done = false;
-            }
-            first = false;
-            return result;
-          }};
-      };
-      var result = [];
-      var iterator = range2(1, 10);
-      var next = iterator.next();
-      while (!next.done) {
-        result.push(next.value);
-        next = iterator.next(2);
-      }
-      expect(result).toEqual([1, 3, 5, 7, 9]);
+      expect(found).toBe("Sue");
     });
   });
   return {};
 });
-System.get("../es6/generator.js" + '');
+System.get("../es6/comprehensions.js" + '');
