@@ -20,7 +20,7 @@ describe('comprehensions', function() {
 		}
 
          let filter = function*(items,predicate) {
-         	//yield* (for (item of items) if(predicate(item)) item);
+			//yield* [for (item of items) if(predicate(item)) item];
          	for(let item of items){
          		console.log("filter",item);
          		if (predicate(item)) {
@@ -31,7 +31,7 @@ describe('comprehensions', function() {
 
          let take = function * (items,number) {
          	let count = 0;
-         	if(number > 1) return;
+         	if(number > items.length) return;
          	for(let item of items){
          		console.log("take",item);
          		yield item;
@@ -50,14 +50,14 @@ describe('comprehensions', function() {
 		let iterator = company[Symbol.iterator]();
 		iterator.next();
 
-		for (let employee of take(filter(company, e => e[0]=='S'),1)) {
+		for (let employee of take(filter(company, e => e[0]=='T'),2)) {
 			count += 1;
 			found = employee;
 			console.log("got", employee)
 		}
 
-		expect(count).toBe(1);
-		expect(found).toBe("Sue");
+		expect(count).toBe(2);
+		expect(found).toBe("Tom");
 
 	});
 

@@ -228,7 +228,7 @@ System.registerModule("../es6/comprehensions.js", [], function() {
                 $ctx.state = 34;
                 break;
               case 34:
-                $ctx.state = (number > 1) ? 1 : 2;
+                $ctx.state = (number > items.length) ? 1 : 2;
                 break;
               case 1:
                 $ctx.state = -2;
@@ -333,8 +333,8 @@ System.registerModule("../es6/comprehensions.js", [], function() {
       try {
         for (var $__3 = void 0,
             $__2 = (take(filter(company, (function(e) {
-              return e[0] == 'S';
-            })), 1))[$traceurRuntime.toProperty(Symbol.iterator)](); !($__5 = ($__3 = $__2.next()).done); $__5 = true) {
+              return e[0] == 'T';
+            })), 2))[$traceurRuntime.toProperty(Symbol.iterator)](); !($__5 = ($__3 = $__2.next()).done); $__5 = true) {
           var employee = $__3.value;
           {
             count += 1;
@@ -356,8 +356,8 @@ System.registerModule("../es6/comprehensions.js", [], function() {
           }
         }
       }
-      expect(count).toBe(1);
-      expect(found).toBe("Sue");
+      expect(count).toBe(2);
+      expect(found).toBe("Tom");
     });
   });
   return {};

@@ -13,7 +13,8 @@ module.exports = function (grunt) {
         },
          traceur: {
             options: {
-                experimental: true
+                experimental: true,
+                arrayComprehension: true
             },
             custom: {
                 files: [{
