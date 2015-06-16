@@ -2,7 +2,7 @@ System.registerModule("../es6/comprehensions.js", [], function() {
   "use strict";
   var __moduleName = "../es6/comprehensions.js";
   describe('comprehensions', function() {
-    it('can be used with yield', function() {
+    xit('can be used with yield', function() {
       var Company = (function() {
         var $__1;
         function Company() {

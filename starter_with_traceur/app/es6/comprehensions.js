@@ -1,6 +1,6 @@
 describe('comprehensions', function() {
 
-	it('can be used with yield', function() {
+	xit('can be used with yield', function() {
 
 		class Company {
 			constructor() {
