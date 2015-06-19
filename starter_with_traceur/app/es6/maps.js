@@ -1,5 +1,5 @@
 describe('Maps', function() {
-	
+
 	it('should contain zero items when constructed', function() {
 		var map = new Map();
 		expect(map.size).toBe(0);
@@ -75,13 +75,13 @@ describe('Maps', function() {
 	});
 
 	it('should support of iteration', function() {
-		var map = new Map([['name','John'],['age',15],['weight','155']]);
-		var iterationCount = 0;
-		for (var [key,value] of map) {
-			// item is a array like ['name','John']
-			iterationCount++;
-		});
-		expect(iterationCount).toBe(3);
+	// 	var map = new Map([['name','John'],['age',15],['weight','155']]);
+	// 	var iterationCount = 0;
+	// 	for (var [key,value] of map) {
+	// 		// item is a array like ['name','John']
+	// 		iterationCount++;
+	// 	});
+	// 	expect(iterationCount).toBe(3);
 	});
 
 	it('should return an iterator of arrays of key value pairs when entries is called', function() {
@@ -109,7 +109,7 @@ describe('Maps', function() {
 	it('should be able to be constructed with an iterator', function() {
 		var map = new Map([['name','John'],['age',15],['weight','155']]);
 		var map2 = new Map(map.entries());
-		exppect(map2.size).tobe(3);
-		
+		expect(map2.size).toBe(3);
+
 	});
 });
