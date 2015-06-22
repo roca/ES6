@@ -109,5 +109,81 @@ describe('Promises', function() {
 	});
 
 
+	describe('Advanced', function() {
+
+		var getOrder = function  (orderId) {
+			return Promise.resolve({userId:35});
+		}
+
+		var getUser = function  (userId) {
+			return Promise.resolve({companyId:18});
+		}
+
+		var getCompany = function  (companyId) {
+			return Promise.resolve({name:'Pluralsight'});
+		}
+
+		it('should chain sequentially using then', function(done) {
+            getOrder(3).then(function(order) {
+            	return getUser(order.userId);
+            }).then(function(user) {
+            	return getCompany(user.companyId);
+            }).then(function(company) {
+            	expect(company.name).toBe('Pluralsight')
+            	done();
+            }).catch(function(error) {
+            	// handle error
+            });
+		});
+
+			var getCourse = function (courseId) {
+
+				var courses = {
+					1: {name:"Introduction to Cobol"},
+					2: {name:"Yet Another C# Course"},
+					3: {name:"How to make billions by blogging"}
+				};
+				return Promise.resolve(courses[courseId]);
+			};
+
+		it('should execute after all promises with all', function(done) {
+
+
+			var courseIds = [1,2,3];
+			var promises = [];
+			for(var i=0 ; i< courseIds.length; i++){
+				promises.push(getCourse(courseIds[i]));
+			}
+
+			Promise.all(promises).then(function (values) {
+				var set = new Set();
+
+				for(var i=0 ; i< values.length; i++){
+					set.add(values[i].name);
+				}
+				expect(set.has("Yet Another C# Course")).toBe(true);
+				expect(set.size).toBe(3);
+				done();
+			});
+
+		});
+
+		it('should resolve after the first promise', function(done) {
+
+			var courseIds = [1,2,3];
+			var promises = [];
+			for(var i=0 ; i< courseIds.length; i++){
+				promises.push(getCourse(courseIds[i]));
+			}
+
+			Promise.race(promises).then(function (firstValue) {
+				expect(firstValue.name).toBeDefined();
+				done();
+			});
+		});
+
+	});
+
+
 
 });
