@@ -1,4 +1,4 @@
-describe('the classes keyword', function() {
+	describe('the classes keyword', function() {
 
 	it('can create a class', function() {
 
