@@ -111,17 +111,6 @@ describe('Promises', function() {
 
 	describe('Advanced', function() {
 
-		var getOrder = function  (orderId) {
-			return Promise.resolve({userId:35});
-		}
-
-		var getUser = function  (userId) {
-			return Promise.resolve({companyId:18});
-		}
-
-		var getCompany = function  (companyId) {
-			return Promise.resolve({name:'Pluralsight'});
-		}
 
 		it('should chain sequentially using then', function(done) {
             getOrder(3).then(function(order) {
@@ -135,16 +124,6 @@ describe('Promises', function() {
             	// handle error
             });
 		});
-
-			var getCourse = function (courseId) {
-
-				var courses = {
-					1: {name:"Introduction to Cobol"},
-					2: {name:"Yet Another C# Course"},
-					3: {name:"How to make billions by blogging"}
-				};
-				return Promise.resolve(courses[courseId]);
-			};
 
 		it('should execute after all promises with all', function(done) {
 
@@ -185,20 +164,8 @@ describe('Promises', function() {
 
 	describe('async generators', function() {
 
-          var oldPause = function(delay,cb){
-          	setTimeout(function() {
-          		console.log('paused for ' + delay + 'ms');
-          		cb();
-          	},delay);
-          }
 
 
-         var pause = function(delay){
-          	setTimeout(function() {
-          		console.log('paused for ' + delay + 'ms');
-          		async.resume();
-          	},delay);
-          }
 
 			xit('should be difficult to read with regular async code', function() {
 
