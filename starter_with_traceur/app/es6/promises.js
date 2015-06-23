@@ -182,6 +182,58 @@ describe('Promises', function() {
 			});
 		});
 
+
+	describe('async generators', function() {
+
+          var oldPause = function(delay,cb){
+          	setTimeout(function() {
+          		console.log('paused for ' + delay + 'ms');
+          		cb();
+          	},delay);
+          }
+
+
+         var pause = function(delay){
+          	setTimeout(function() {
+          		console.log('paused for ' + delay + 'ms');
+          		async.resume();
+          	},delay);
+          }
+
+			xit('should be difficult to read with regular async code', function() {
+
+				console.log('start');
+				oldPause(500,function(){
+					console.log('middle');
+					oldPause(500,function(){
+						console.log('end');
+					});
+				});
+
+			});
+
+			it('should be easier to read with generators', function(done) {
+
+
+
+				function* main(){
+					console.log('start');
+					yield pause(500);
+					console.log('middle');
+					yield pause(500);
+					console.log('end');
+
+
+					done();
+				}
+
+				async.run(main);
+
+
+			});
+
+		});
+
 	});
 
 
