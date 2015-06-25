@@ -2,7 +2,7 @@ System.registerModule("../es6/promises.js", [], function() {
   "use strict";
   var __moduleName = "../es6/promises.js";
   describe('Promises', function() {
-    it('should execute the callback given to then', function(done) {
+    xit('should execute the callback given to then', function(done) {
       var resolved = false;
       var promise = new Promise(function(resolve, reject) {
         resolved = true;
@@ -13,7 +13,7 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should receive the resolved data', function(done) {
+    xit('should receive the resolved data', function(done) {
       var promise = new Promise(function(resolve, reject) {
         resolve(1);
       });
@@ -22,7 +22,7 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should fail when rejected', function(done) {
+    xit('should fail when rejected', function(done) {
       var promise = new Promise(function(resolve, reject) {
         reject(Error("oh no!"));
       });
@@ -31,7 +31,7 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should have a catch', function(done) {
+    xit('should have a catch', function(done) {
       var promise = new Promise(function(resolve, reject) {
         reject(Error("oh no!"));
       });
@@ -40,7 +40,7 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should compose whenresolved with a promise', function(done) {
+    xit('should compose whenresolved with a promise', function(done) {
       var previousPromise = new Promise(function(resolve, reject) {
         resolve(3);
       });
@@ -52,7 +52,7 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should have a static resolve', function(done) {
+    xit('should have a static resolve', function(done) {
       var previousPromise = Promise.resolve(3);
       var promise = Promise.resolve(previousPromise);
       promise.then(function(data) {
@@ -60,14 +60,14 @@ System.registerModule("../es6/promises.js", [], function() {
         done();
       });
     });
-    it('should have a static reject', function(done) {
+    xit('should have a static reject', function(done) {
       var promise = Promise.reject(Error("oh no!"));
       promise.catch(function(error) {
         expect(error.message).toBe("oh no!");
         done();
       });
     });
-    it('should be asynchronous', function(done) {
+    xit('should be asynchronous', function(done) {
       var async = false;
       var promise = new Promise(function(resolve, reject) {
         resolve();
@@ -79,7 +79,7 @@ System.registerModule("../es6/promises.js", [], function() {
       async = true;
     });
     describe('Advanced', function() {
-      it('should chain sequentially using then', function(done) {
+      xit('should chain sequentially using then', function(done) {
         getOrder(3).then(function(order) {
           return getUser(order.userId);
         }).then(function(user) {
@@ -89,7 +89,7 @@ System.registerModule("../es6/promises.js", [], function() {
           done();
         }).catch(function(error) {});
       });
-      it('should execute after all promises with all', function(done) {
+      xit('should execute after all promises with all', function(done) {
         var courseIds = [1, 2, 3];
         var promises = [];
         for (var i = 0; i < courseIds.length; i++) {
@@ -105,7 +105,7 @@ System.registerModule("../es6/promises.js", [], function() {
           done();
         });
       });
-      it('should resolve after the first promise', function(done) {
+      xit('should resolve after the first promise', function(done) {
         var courseIds = [1, 2, 3];
         var promises = [];
         for (var i = 0; i < courseIds.length; i++) {
@@ -126,7 +126,7 @@ System.registerModule("../es6/promises.js", [], function() {
             });
           });
         });
-        it('should be easier to read with generators', function(done) {
+        xit('should be easier to read with generators', function(done) {
           var $__0 = $traceurRuntime.initGeneratorFunction(main);
           function main() {
             return $traceurRuntime.createGeneratorInstance(function($ctx) {
@@ -156,6 +156,108 @@ System.registerModule("../es6/promises.js", [], function() {
                     break;
                   case 8:
                     console.log('end');
+                    done();
+                    $ctx.state = -2;
+                    break;
+                  default:
+                    return $ctx.end();
+                }
+            }, $__0, this);
+          }
+          async.run(main);
+        });
+        xit('should work with returned data', function(done) {
+          var $__0 = $traceurRuntime.initGeneratorFunction(main);
+          function main() {
+            var price;
+            return $traceurRuntime.createGeneratorInstance(function($ctx) {
+              while (true)
+                switch ($ctx.state) {
+                  case 0:
+                    $ctx.state = 2;
+                    return getStockPrice();
+                  case 2:
+                    price = $ctx.sent;
+                    $ctx.state = 4;
+                    break;
+                  case 4:
+                    $ctx.state = (price > 45) ? 5 : 9;
+                    break;
+                  case 5:
+                    $ctx.state = 6;
+                    return executeTrade();
+                  case 6:
+                    $ctx.maybeThrow();
+                    $ctx.state = 8;
+                    break;
+                  case 9:
+                    console.log('trade not made: ' + price);
+                    $ctx.state = 8;
+                    break;
+                  case 8:
+                    ;
+                    done();
+                    $ctx.state = -2;
+                    break;
+                  default:
+                    return $ctx.end();
+                }
+            }, $__0, this);
+          }
+          async.run(main);
+        });
+        it('should work with errors', function(done) {
+          var $__0 = $traceurRuntime.initGeneratorFunction(main);
+          function main() {
+            var price,
+                ex;
+            return $traceurRuntime.createGeneratorInstance(function($ctx) {
+              while (true)
+                switch ($ctx.state) {
+                  case 0:
+                    $ctx.pushTry(14, null);
+                    $ctx.state = 17;
+                    break;
+                  case 17:
+                    $ctx.state = 2;
+                    return getStockPrice();
+                  case 2:
+                    price = $ctx.sent;
+                    $ctx.state = 4;
+                    break;
+                  case 4:
+                    $ctx.state = (price > 45) ? 5 : 9;
+                    break;
+                  case 5:
+                    $ctx.state = 6;
+                    return executeTrade();
+                  case 6:
+                    $ctx.maybeThrow();
+                    $ctx.state = 8;
+                    break;
+                  case 9:
+                    console.log('trade not made: ' + price);
+                    $ctx.state = 8;
+                    break;
+                  case 8:
+                    ;
+                    $ctx.state = 13;
+                    break;
+                  case 13:
+                    $ctx.popTry();
+                    $ctx.state = 19;
+                    break;
+                  case 14:
+                    $ctx.popTry();
+                    $ctx.maybeUncatchable();
+                    ex = $ctx.storedException;
+                    $ctx.state = 20;
+                    break;
+                  case 20:
+                    console.log('error!' + ex.message);
+                    $ctx.state = 19;
+                    break;
+                  case 19:
                     done();
                     $ctx.state = -2;
                     break;

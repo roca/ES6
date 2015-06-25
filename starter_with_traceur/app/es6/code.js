@@ -1,9 +1,6 @@
 'use strict'
 
-
-
-
-(function () {
+(function (target) {
 
 		var getOrder = function  (orderId) {
 			return Promise.resolve({userId:35});
@@ -48,22 +45,47 @@
 	};
 
 
-	var resume = function() {
-		sequence.next();
+	var resume = function(value) {
+		sequence.next(value);
 	};
 
+	var fail = function(reason){
+		sequence.throw(reason);
+	}
 
-	window.async = {
+	var getStockPrice = function () {
+		setTimeout(function(){
+			try {
+				throw Error('there was a problem!');
+				async.resume(50);
+			} catch(ex) {
+				async.fail(ex);
+			}
+		},300);
+	}
+
+
+	var executeTrade = function () {
+		setTimeout(function(){
+			console.log("trade completed");
+			async.resume();
+		},300);
+	}
+
+	target.async = {
 		run,
-		resume
+		resume,
+		fail
 	};
 
-	window.pause = pause;
-	window.oldPause = oldPause;
-	window.getOrder = getOrder;
-	window.getUser = getUser;
-	window.getCompany = getCompany;
-	window.getCourse = getCourse;
+	target.pause = pause;
+	target.oldPause = oldPause;
+	target.getOrder = getOrder;
+	target.getUser = getUser;
+	target.getCompany = getCompany;
+	target.getCourse = getCourse;
+	target.getStockPrice = getStockPrice;
+	target.executeTrade = executeTrade;
 
 
-}());
+}(window));

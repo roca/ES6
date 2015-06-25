@@ -1,7 +1,7 @@
 System.registerModule("../es6/code.js", [], function() {
   "use strict";
   var __moduleName = "../es6/code.js";
-  'use strict'(function() {
+  'use strict'(function(target) {
     var getOrder = function(orderId) {
       return Promise.resolve({userId: 35});
     };
@@ -36,20 +36,42 @@ System.registerModule("../es6/code.js", [], function() {
       sequence = generator();
       var next = sequence.next();
     };
-    var resume = function() {
-      sequence.next();
+    var resume = function(value) {
+      sequence.next(value);
     };
-    window.async = {
+    var fail = function(reason) {
+      sequence.throw(reason);
+    };
+    var getStockPrice = function() {
+      setTimeout(function() {
+        try {
+          throw Error('there was a problem!');
+          async.resume(50);
+        } catch (ex) {
+          async.fail(ex);
+        }
+      }, 300);
+    };
+    var executeTrade = function() {
+      setTimeout(function() {
+        console.log("trade completed");
+        async.resume();
+      }, 300);
+    };
+    target.async = {
       run: run,
-      resume: resume
+      resume: resume,
+      fail: fail
     };
-    window.pause = pause;
-    window.oldPause = oldPause;
-    window.getOrder = getOrder;
-    window.getUser = getUser;
-    window.getCompany = getCompany;
-    window.getCourse = getCourse;
-  }());
+    target.pause = pause;
+    target.oldPause = oldPause;
+    target.getOrder = getOrder;
+    target.getUser = getUser;
+    target.getCompany = getCompany;
+    target.getCourse = getCourse;
+    target.getStockPrice = getStockPrice;
+    target.executeTrade = executeTrade;
+  }(window));
   return {};
 });
 System.get("../es6/code.js" + '');

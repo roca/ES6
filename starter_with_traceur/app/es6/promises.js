@@ -2,7 +2,7 @@ describe('Promises', function() {
 
 
 
-	it('should execute the callback given to then', function(done) {
+	xit('should execute the callback given to then', function(done) {
 		var resolved = false;
 
 		var promise = new Promise(function  (resolve,reject) {
@@ -19,7 +19,7 @@ describe('Promises', function() {
 	});
 
 
-	it('should receive the resolved data', function(done) {
+	xit('should receive the resolved data', function(done) {
 		var promise = new Promise(function  (resolve,reject) {
 			resolve(1);
 		});
@@ -30,7 +30,7 @@ describe('Promises', function() {
 		});
 	});
 
-	it('should fail when rejected', function(done) {
+	xit('should fail when rejected', function(done) {
 		var promise = new Promise(function  (resolve,reject) {
 			reject(Error("oh no!"));
 		});
@@ -43,7 +43,7 @@ describe('Promises', function() {
 		});
 	});
 
-	it('should have a catch', function(done) {
+	xit('should have a catch', function(done) {
 		var promise = new Promise(function  (resolve,reject) {
 			reject(Error("oh no!"));
 		});
@@ -55,7 +55,7 @@ describe('Promises', function() {
 	});
 
 
-	it('should compose whenresolved with a promise', function(done) {
+	xit('should compose whenresolved with a promise', function(done) {
 		var previousPromise = new Promise(function  (resolve,reject) {
 			resolve(3);
 		});
@@ -70,7 +70,7 @@ describe('Promises', function() {
 		});
 	});
 
-	it('should have a static resolve', function(done) {
+	xit('should have a static resolve', function(done) {
 		var previousPromise = Promise.resolve(3);
 
 		var promise = Promise.resolve(previousPromise);
@@ -83,7 +83,7 @@ describe('Promises', function() {
 	});
 
 
-	it('should have a static reject', function(done) {
+	xit('should have a static reject', function(done) {
 		var promise = Promise.reject(Error("oh no!"));
 
 		promise.catch(function  (error) {
@@ -92,7 +92,7 @@ describe('Promises', function() {
 		});
 	});
 
-	it('should be asynchronous', function(done) {
+	xit('should be asynchronous', function(done) {
 		var async = false;
 
 		var promise = new Promise(function  (resolve,reject) {
@@ -112,7 +112,7 @@ describe('Promises', function() {
 	describe('Advanced', function() {
 
 
-		it('should chain sequentially using then', function(done) {
+		xit('should chain sequentially using then', function(done) {
             getOrder(3).then(function(order) {
             	return getUser(order.userId);
             }).then(function(user) {
@@ -125,7 +125,7 @@ describe('Promises', function() {
             });
 		});
 
-		it('should execute after all promises with all', function(done) {
+		xit('should execute after all promises with all', function(done) {
 
 
 			var courseIds = [1,2,3];
@@ -147,7 +147,7 @@ describe('Promises', function() {
 
 		});
 
-		it('should resolve after the first promise', function(done) {
+		xit('should resolve after the first promise', function(done) {
 
 			var courseIds = [1,2,3];
 			var promises = [];
@@ -179,25 +179,52 @@ describe('Promises', function() {
 
 			});
 
-			it('should be easier to read with generators', function(done) {
-
-
-
+			xit('should be easier to read with generators', function(done) {
 				function* main(){
 					console.log('start');
 					yield pause(500);
 					console.log('middle');
 					yield pause(500);
 					console.log('end');
+					done();
+				}
+				async.run(main);
+			});
 
+			xit('should work with returned data', function(done) {
+
+				function * main(){
+					var price = yield getStockPrice();
+					if (price > 45) {
+						yield executeTrade();
+					} else{
+						console.log('trade not made: ' + price);
+					};
+					done();
+				}
+				async.run(main);
+			});
+			it('should work with errors', function(done) {
+
+				function * main(){
+					try {
+						var price = yield getStockPrice();
+						if (price > 45) {
+							yield executeTrade();
+						} else{
+							console.log('trade not made: ' + price);
+						};
+					} catch(ex){
+						console.log('error!' + ex.message);
+					}
 
 					done();
 				}
 
 				async.run(main);
-
-
 			});
+
+
 
 		});
 
